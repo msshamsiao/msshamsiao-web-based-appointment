@@ -32,4 +32,9 @@ class Client extends Model
     {
         return $this->hasMany(Appointment::class, 'client_id', 'id');
     }
+
+    public function client_email()
+    {
+        return $this->belongsTo(User::class, 'id', 'client_id');
+    }
 }

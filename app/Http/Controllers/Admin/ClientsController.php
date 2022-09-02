@@ -42,13 +42,14 @@ class ClientsController extends Controller
                 return $row->id ? $row->id : "";
             });
             $table->editColumn('name', function ($row) {
-                return $row->name ? $row->name : "";
+                $fullname = $row->first_name.' '.$row->last_name;
+                return $fullname;
             });
             $table->editColumn('phone', function ($row) {
-                return $row->phone ? $row->phone : "";
+                return $row->phone;
             });
             $table->editColumn('email', function ($row) {
-                return $row->email ? $row->email : "";
+                return $row->client_email->email;
             });
 
             $table->rawColumns(['actions', 'placeholder']);
