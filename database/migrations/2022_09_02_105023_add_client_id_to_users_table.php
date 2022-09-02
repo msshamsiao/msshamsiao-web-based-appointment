@@ -14,7 +14,7 @@ class AddClientIdToUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->integer('client_id')->after('password');
+            $table->integer('client_id')->after('password')->nullable();
         });
     }
 
