@@ -11,7 +11,7 @@
             @csrf
             <div class="form-group {{ $errors->has('name') ? 'has-error' : '' }}">
                 <label for="name">Lawyer Name*</label>
-                <input type="text" id="name" name="name" class="form-control" value="{{ old('name', isset($employee) ? $employee->name : '') }}" required>
+                <input type="text" id="lawyer_name" name="lawyer_name" class="form-control" value="{{ old('name', isset($employee) ? $employee->name : '') }}" required>
                 @if($errors->has('name'))
                     <em class="invalid-feedback">
                         {{ $errors->first('name') }}

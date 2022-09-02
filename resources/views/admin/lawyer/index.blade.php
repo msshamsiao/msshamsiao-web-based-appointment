@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('content')
-@can('employee_create')
+@can('lawyer_create')
     <div style="margin-bottom: 10px;" class="row">
         <div class="col-lg-12">
             <a class="btn btn-success" href="{{ route("admin.lawyer.create") }}">
@@ -78,7 +78,7 @@
             columns: [
                 { data: 'placeholder', name: 'placeholder' },
                 { data: 'id', name: 'id' },
-                { data: 'name', name: 'name' },
+                { data: 'lawyer_name', name: 'lawyer_name' },
                 { data: 'phone', name: 'phone' },
                 { data: 'email', name: 'email' },
                 { data: 'actions', name: '{{ trans('global.actions') }}' },

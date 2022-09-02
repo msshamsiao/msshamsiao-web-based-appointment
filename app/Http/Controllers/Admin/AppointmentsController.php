@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Appointment;
 use App\Client;
 use App\Employee;
+use App\Lawyer;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyAppointmentRequest;
 use App\Http\Requests\StoreAppointmentRequest;
@@ -20,7 +21,7 @@ class AppointmentsController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $query = Appointment::with(['client', 'employee', 'services'])->select(sprintf('%s.*', (new Appointment)->table));
+            $query = Appointment::select(sprintf('%s.*', (new Appointment)->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -45,37 +46,38 @@ class AppointmentsController extends Controller
                 return $row->id ? $row->id : "";
             });
             $table->addColumn('client_name', function ($row) {
-                return $row->client ? $row->client->name : '';
+                return $row->client_id;
             });
 
             $table->addColumn('lawyer_name', function ($row) {
-                return $row->employee ? $row->employee->name : '';
+                return $row->lawyer->lawyer_name;
             });
 
             $table->editColumn('services', function ($row) {
-                $labels = [];
-
-                foreach ($row->services as $service) {
-                    $labels[] = sprintf('<span class="label label-info label-many">%s</span>', $service->name);
-                }
-
-                return implode(' ', $labels);
+                return sprintf('<span class="badge badge-info">%s</span>', $row->services->name);
             });
 
             $table->addColumn('start_time', function ($row) {
-                return $row->employee ? $row->employee->name : '';
+                return date('M j, Y h:m A', strtotime($row->start_time));
             });
 
             $table->addColumn('finish_time', function ($row) {
-                return $row->employee ? $row->employee->name : '';
+                return date('M j, Y h:m A', strtotime($row->finish_time));
             });
 
             $table->editColumn('comments', function ($row) {
-                return $row->comments ? $row->comments : "";
+                return $row->comments;
             });
             
             $table->addColumn('status', function ($row) {
-                return $row->employee ? $row->employee->name : '';
+                
+                $status = "";
+                if($row->status == 'Pending'){
+                    $status = '<span class="badge badge-danger">Pending</span>';
+                }else{
+                    $status = '<span class="badge badge-success">Approved</span>';
+                }
+                return $status;
             });
 
             $table->rawColumns(['actions', 'placeholder', 'client_name', 'lawyer_name', 'services', 'start_time', 'finish_time', 'comments', 'status', 'actions']);
@@ -92,23 +94,24 @@ class AppointmentsController extends Controller
 
         $clients = Client::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $services = Service::all()->pluck('name', 'id');
+        $lawyers = Lawyer::get();
 
-        return view('admin.appointments.create', compact('clients','services'));
+        $services = Service::get();
+
+        return view('admin.appointments.create', compact('clients','lawyers','services'));
     }
 
     public function store(StoreAppointmentRequest $request)
     {
-        $appointment = Appointment::create([
-            'client_id' => auth()->user()->user_client->id,
+        Appointment::create([
+            'client_id' => $request->lawyer,
             'service_id' => $request->services,
             'lawyer_id' => $request->lawyer,
             'start_time' => $request->start_time,
             'finish_time' => $request->finish_time,
-            'comments' => $request->comments
+            'comments' => $request->comments,
+            'status' => 'Pending'
         ]);
-
-        $appointment->services()->sync($request->input('services', []));
 
         return redirect()->route('admin.appointments.index');
     }

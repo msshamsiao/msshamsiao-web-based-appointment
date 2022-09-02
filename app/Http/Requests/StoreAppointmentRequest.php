@@ -19,10 +19,6 @@ class StoreAppointmentRequest extends FormRequest
     public function rules()
     {
         return [
-            'client_id'   => [
-                'required',
-                'integer',
-            ],
             'start_time'  => [
                 'required',
                 'date_format:' . config('panel.date_format') . ' ' . config('panel.time_format'),
@@ -33,9 +29,6 @@ class StoreAppointmentRequest extends FormRequest
             ],
             'services.*'  => [
                 'integer',
-            ],
-            'services'    => [
-                'array',
             ],
         ];
     }

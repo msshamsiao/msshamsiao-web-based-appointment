@@ -9,14 +9,22 @@
     <div class="card-body">
         <form action="{{ route("admin.appointments.store") }}" method="POST" enctype="multipart/form-data">
             @csrf
-            
+            <div class="form-group">
+                <label for="lawyer">Lawyer</label>
+                <select name="lawyer" id="lawyer" class="form-control select2">
+                    @foreach($lawyers as $lawyer)
+                        <option value="{{ $lawyer->id }}">{{ $lawyer->lawyer_name }}</option>
+                    @endforeach
+                </select>
+            </div>
             <div class="form-group {{ $errors->has('services') ? 'has-error' : '' }}">
                 <label for="services">{{ trans('cruds.appointment.fields.services') }}
                     <span class="btn btn-info btn-xs select-all">{{ trans('global.select_all') }}</span>
-                    <span class="btn btn-info btn-xs deselect-all">{{ trans('global.deselect_all') }}</span></label>
+                    <span class="btn btn-info btn-xs deselect-all">{{ trans('global.deselect_all') }}</span>
+                </label>
                 <select name="services" id="services" class="form-control select2">
-                    @foreach($services as $id => $services)
-                        <option value="{{ $id }}" {{ (in_array($id, old('services', [])) || isset($appointment) && $appointment->services->contains($id)) ? 'selected' : '' }}>{{ $services }}</option>
+                    @foreach($services as $service)
+                        <option value="{{ $service->id }}">{{ $service->name }}</option>
                     @endforeach
                 </select>
                 @if($errors->has('services'))

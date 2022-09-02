@@ -17,27 +17,27 @@ class LawyerController extends Controller
     public function index(Request $request)
     {
         if($request->ajax()){
-            $query = Lawyer::with(['client', 'employee', 'services'])->select(sprintf('%s.*', (new Lawyer())->table));
+            $query = Lawyer::select(sprintf('%s.*', (new Lawyer())->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp');
             $table->addColumn('actions', '&nbsp;');
             $table->addColumn('lawyer_name', function ($row) {
-                return $row->client ? $row->client->name : '';
+                return $row->lawyer_name;
             });
             $table->addColumn('contact_number', function ($row) {
-                return $row->client ? $row->client->name : '';
+                return $row->phone;
             });
             $table->addColumn('email', function ($row) {
-                return $row->client ? $row->client->name : '';
+                return $row->email;
             });
             $table->addColumn('status', function ($row) {
-                return $row->client ? $row->client->name : '';
+                return $row->email;
             });
             $table->editColumn('actions', function ($row) {
-                $viewGate      = 'appointment_show';
-                $editGate      = 'appointment_edit';
-                $deleteGate    = 'appointment_delete';
+                $viewGate      = 'lawyer_show';
+                $editGate      = 'lawyer_edit';
+                $deleteGate    = 'lawyer_delete';
                 $crudRoutePart = 'appointments';
 
                 return view('partials.datatablesActions', compact(
@@ -62,8 +62,17 @@ class LawyerController extends Controller
         return view('admin.lawyer.create');
     }
 
-    public function store()
+    public function store(Request $request)
     {
+        $this->validate($request, [
+            'lawyer_name' => 'required',
+            'email' => 'required',
+            'phone' => 'required'
+        ]);
 
+        $input = $request->all();
+        Lawyer::create($input);
+
+        return redirect()->route('admin.lawyer.index')->with('success','Successfully created!');
     }
 }

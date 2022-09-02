@@ -34,9 +34,9 @@ class Appointment extends Model
         return $this->belongsTo(Client::class, 'client_id');
     }
 
-    public function employee()
+    public function lawyer()
     {
-        return $this->belongsTo(Employee::class, 'employee_id');
+        return $this->belongsTo(Lawyer::class, 'lawyer_id');
     }
 
     protected function serializeDate(\DateTimeInterface $date)
@@ -46,6 +46,6 @@ class Appointment extends Model
 
     public function services()
     {
-        return $this->belongsToMany(Service::class);
+        return $this->belongsTo(Service::class, 'service_id');
     }
 }
