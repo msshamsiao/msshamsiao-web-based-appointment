@@ -44,9 +44,6 @@ class ServicesController extends Controller
             $table->editColumn('name', function ($row) {
                 return $row->name ? $row->name : "";
             });
-            $table->editColumn('price', function ($row) {
-                return $row->price ? $row->price : "";
-            });
 
             $table->rawColumns(['actions', 'placeholder']);
 
@@ -88,7 +85,7 @@ class ServicesController extends Controller
     {
         abort_if(Gate::denies('service_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return view('admin.services.show', compact('service'));
+        return view('admin.rooms.show', compact('service'));
     }
 
     public function destroy(Service $service)

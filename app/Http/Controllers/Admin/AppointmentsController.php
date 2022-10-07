@@ -110,7 +110,7 @@ class AppointmentsController extends Controller
             'start_time' => $request->start_time,
             'finish_time' => $request->finish_time,
             'comments' => $request->comments,
-            'status' => 'Pending'
+            'status' => 'Available'
         ]);
 
         return redirect()->route('admin.appointments.index');
