@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddClientIdToUsersTable extends Migration
+class AddEmailClientsToTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class AddClientIdToUsersTable extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->integer('client_id')->after('password')->nullable();
+        Schema::table('clients', function (Blueprint $table) {
+            $table->string('email')->after('phone');
         });
     }
 
@@ -25,7 +25,7 @@ class AddClientIdToUsersTable extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
+        Schema::table('table', function (Blueprint $table) {
             //
         });
     }

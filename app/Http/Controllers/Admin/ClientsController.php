@@ -49,7 +49,7 @@ class ClientsController extends Controller
                 return $row->phone;
             });
             $table->editColumn('email', function ($row) {
-                return $row->client_email->email;
+                return $row->email;
             });
 
             $table->rawColumns(['actions', 'placeholder']);

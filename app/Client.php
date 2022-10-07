@@ -23,6 +23,7 @@ class Client extends Model
         'middle_name',
         'last_name',
         'phone',
+        'email',
         'created_at',
         'updated_at',
         'deleted_at',
