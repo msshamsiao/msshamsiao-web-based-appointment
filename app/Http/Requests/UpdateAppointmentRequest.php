@@ -19,10 +19,6 @@ class UpdateAppointmentRequest extends FormRequest
     public function rules()
     {
         return [
-            'client_id'   => [
-                'required',
-                'integer',
-            ],
             'start_time'  => [
                 'required',
                 'date_format:' . config('panel.date_format') . ' ' . config('panel.time_format'),
@@ -30,12 +26,6 @@ class UpdateAppointmentRequest extends FormRequest
             'finish_time' => [
                 'required',
                 'date_format:' . config('panel.date_format') . ' ' . config('panel.time_format'),
-            ],
-            'services.*'  => [
-                'integer',
-            ],
-            'services'    => [
-                'array',
             ],
         ];
     }

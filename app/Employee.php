@@ -13,7 +13,7 @@ class Employee extends Model implements HasMedia
 {
     use SoftDeletes, InteractsWithMedia, HasFactory;
 
-    public $table = 'employees';
+    public $table = 'clients';
 
     protected $appends = [
         'photo',

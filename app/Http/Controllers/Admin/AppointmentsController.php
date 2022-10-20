@@ -21,7 +21,9 @@ class AppointmentsController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
+
             $query = Appointment::select(sprintf('%s.*', (new Appointment)->table));
+            
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -46,7 +48,7 @@ class AppointmentsController extends Controller
                 return $row->id ? $row->id : "";
             });
             $table->addColumn('client_name', function ($row) {
-                return $row->client_id;
+                return $row->client['first_name']." ".$row->client['last_name'];
             });
 
             $table->addColumn('lawyer_name', function ($row) {
@@ -122,19 +124,27 @@ class AppointmentsController extends Controller
 
         $clients = Client::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $employees = Employee::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $lawyers = Lawyer::get();
 
-        $services = Service::all()->pluck('name', 'id');
+        $services = Service::get();
 
-        $appointment->load('client', 'employee', 'services');
+        $appointment->load('client','services');
 
-        return view('admin.appointments.edit', compact('clients', 'employees', 'services', 'appointment'));
+        return view('admin.appointments.edit', compact('clients','lawyers','services', 'appointment'));
     }
 
-    public function update(UpdateAppointmentRequest $request, Appointment $appointment)
+    public function update(UpdateAppointmentRequest $request, $id)
     {
-        $appointment->update($request->all());
-        $appointment->services()->sync($request->input('services', []));
+        $appointment = Appointment::findOrFail($id);
+
+        $appointment->update([
+            'lawyer_id' => $request->lawyer,
+            'service_id' => $request->services,
+            'start_time' => $request->start_time,
+            'finish_time' => $request->finish_time,
+            'comments' => $request->comments,
+            'status' => $request->status
+        ]);
 
         return redirect()->route('admin.appointments.index');
     }

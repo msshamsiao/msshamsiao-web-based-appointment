@@ -18,18 +18,9 @@
         <table class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-Service">
             <thead>
                 <tr>
-                    <th width="10">
-
-                    </th>
-                    <th>
-                        {{ trans('cruds.service.fields.id') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.service.fields.name') }}
-                    </th>
-                    <th>
-                        &nbsp;
-                    </th>
+                    <th></th>
+                    <th>Name of Services</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
         </table>
@@ -82,11 +73,10 @@
         ajax: "{{ route('admin.services.index') }}",
         columns: [
             { data: 'placeholder', name: 'placeholder' },
-            { data: 'id', name: 'id' },
             { data: 'name', name: 'name' },
             { data: 'actions', name: '{{ trans('global.actions') }}' }
         ],
-        order: [[ 1, 'desc' ]],
+        order: [[ 1, 'asc' ]],
         pageLength: 100,
     };
 

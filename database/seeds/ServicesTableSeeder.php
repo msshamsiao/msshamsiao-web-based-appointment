@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
-
+use App\Service;
 class ServicesTableSeeder extends Seeder
 {
     /**
@@ -11,6 +11,24 @@ class ServicesTableSeeder extends Seeder
      */
     public function run()
     {
-        \App\Service::factory()->count(10)->create();
+        Service::create([
+            'name' => 'Criminal Case'
+        ]);
+
+        Service::create([
+            'name' => 'Labor Case'
+        ]);
+
+        Service::create([
+            'name' => 'Civil Case'
+        ]);
+
+        Service::create([
+            'name' => 'Administrative Case'
+        ]);
+
+        Service::create([
+            'name' => 'Other Quash-Judicial Case'
+        ]);
     }
 }

@@ -24,13 +24,11 @@ class ServicesController extends Controller
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate      = 'service_show';
                 $editGate      = 'service_edit';
                 $deleteGate    = 'service_delete';
                 $crudRoutePart = 'services';
 
                 return view('partials.datatablesActions', compact(
-                    'viewGate',
                     'editGate',
                     'deleteGate',
                     'crudRoutePart',
@@ -38,9 +36,6 @@ class ServicesController extends Controller
                 ));
             });
 
-            $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : "";
-            });
             $table->editColumn('name', function ($row) {
                 return $row->name ? $row->name : "";
             });
