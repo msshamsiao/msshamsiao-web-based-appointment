@@ -22,14 +22,21 @@ class AppointmentsController extends Controller
     {
         if ($request->ajax()) {
 
-            $query = Appointment::select(sprintf('%s.*', (new Appointment)->table));
-            
-            $table = Datatables::of($query);
+            $query = Appointment::latest();
 
-            $table->addColumn('placeholder', '&nbsp;');
-            $table->addColumn('actions', '&nbsp;');
+            if(auth()->user()->roles()->first()->title == 'User'){
+                $query = $query->whereHas('client', function($q){
+                    $q->where('email', auth()->user()->email);
+                });
+            }
 
-            $table->editColumn('actions', function ($row) {
+            $query = $query->get();
+
+            $table = DataTables::of($query)
+            ->addIndexColumn()
+            ->addColumn('placeholder', '&nbsp;')
+            ->addColumn('actions', '&nbsp;')
+            ->editColumn('actions', function ($row) {
                 $viewGate      = 'appointment_show';
                 $editGate      = 'appointment_edit';
                 $deleteGate    = 'appointment_delete';
@@ -42,36 +49,29 @@ class AppointmentsController extends Controller
                     'crudRoutePart',
                     'row'
                 ));
-            });
-
-            $table->editColumn('id', function ($row) {
+            })
+            ->editColumn('id', function ($row) {
                 return $row->id ? $row->id : "";
-            });
-            $table->addColumn('client_name', function ($row) {
+            })
+            ->addColumn('client_name', function ($row) {
                 return $row->client['first_name']." ".$row->client['last_name'];
-            });
-
-            $table->addColumn('lawyer_name', function ($row) {
+            })
+            ->addColumn('lawyer_name', function ($row) {
                 return $row->lawyer->lawyer_name;
-            });
-
-            $table->editColumn('services', function ($row) {
+            })
+            ->editColumn('services', function ($row) {
                 return sprintf('<span class="badge badge-info">%s</span>', $row->services->name);
-            });
-
-            $table->addColumn('start_time', function ($row) {
+            })
+            ->addColumn('start_time', function ($row) {
                 return date('M j, Y h:m A', strtotime($row->start_time));
-            });
-
-            $table->addColumn('finish_time', function ($row) {
+            })
+            ->addColumn('finish_time', function ($row) {
                 return date('M j, Y h:m A', strtotime($row->finish_time));
-            });
-
-            $table->editColumn('comments', function ($row) {
+            })
+            ->editColumn('comments', function ($row) {
                 return $row->comments;
-            });
-            
-            $table->addColumn('status', function ($row) {
+            })
+            ->addColumn('status', function ($row) {
                 
                 $status = "";
                 if($row->status == 'Pending'){
@@ -82,9 +82,9 @@ class AppointmentsController extends Controller
                 return $status;
             });
 
-            $table->rawColumns(['actions', 'placeholder', 'client_name', 'lawyer_name', 'services', 'start_time', 'finish_time', 'comments', 'status', 'actions']);
+            return $table->rawColumns(['actions', 'placeholder', 'client_name', 'lawyer_name', 'services', 'start_time', 'finish_time', 'comments', 'status', 'actions'])
+            ->make(true);
 
-            return $table->make(true);
         }
 
         return view('admin.appointments.index');

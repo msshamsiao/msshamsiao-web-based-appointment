@@ -19,17 +19,30 @@ class StoreAppointmentRequest extends FormRequest
     public function rules()
     {
         return [
-            'start_time'  => [
-                'required',
-                'date_format:' . config('panel.date_format') . ' ' . config('panel.time_format'),
-            ],
-            'finish_time' => [
-                'required',
-                'date_format:' . config('panel.date_format') . ' ' . config('panel.time_format'),
-            ],
-            'services.*'  => [
-                'integer',
-            ],
+            'lawyer_id' => 'required',
+
+            'start_time'  => 'required|unique:appointments',
+                [
+                    'date_format:' . config('panel.date_format') . ' ' . config('panel.time_format'),
+                ],
+
+            'finish_time' => 'required',
+                [
+                    'date_format:' . config('panel.date_format') . ' ' . config('panel.time_format'),
+                ],
+
+            'service_id' => 'required',
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+
+            'start_time.required' => 'Start Time is required',
+            'finish.required' => 'Finish Time is required',
+
+            'start_time.unique' => 'Start Time is not avaiable! Please choose another time.' 
         ];
     }
 }
