@@ -20,7 +20,7 @@ class SystemCalendarController extends Controller
             }
 
             $events[] = [
-                'title' => $appointment->client['name'] . ' ('.$appointment->client['name'].')',
+                'title' => $appointment->client['first_name']." ".$appointment->client['last_name'] . ' ('.date('F j, Y - g:i A ', strtotime($appointment->start_time)).')',
                 'start' => $appointment->start_time,
                 'url'   => route('admin.appointments.edit', $appointment->id),
             ];
