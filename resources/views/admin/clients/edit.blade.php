@@ -11,11 +11,35 @@
             @csrf
             @method('PUT')
             <div class="form-group {{ $errors->has('name') ? 'has-error' : '' }}">
-                <label for="name">{{ trans('cruds.client.fields.name') }}</label>
-                <input type="text" id="name" name="name" class="form-control" value="{{ old('name', isset($client) ? $client->name : '') }}">
-                @if($errors->has('name'))
+                <label for="name">Firstname</label>
+                <input type="text" id="firstname" name="firstname" class="form-control" value="{{ old('name', isset($client) ? $client->first_name : '') }}">
+                @if($errors->has('firstname'))
                     <em class="invalid-feedback">
-                        {{ $errors->first('name') }}
+                        {{ $errors->first('firstname') }}
+                    </em>
+                @endif
+                <p class="helper-block">
+                    {{ trans('cruds.client.fields.name_helper') }}
+                </p>
+            </div>
+            <div class="form-group {{ $errors->has('name') ? 'has-error' : '' }}">
+                <label for="name">Middlename</label>
+                <input type="text" id="middlename" name="middlename" class="form-control" value="{{ old('name', isset($client) ? $client->middle_name : '') }}">
+                @if($errors->has('middlename'))
+                    <em class="invalid-feedback">
+                        {{ $errors->first('middlename') }}
+                    </em>
+                @endif
+                <p class="helper-block">
+                    {{ trans('cruds.client.fields.name_helper') }}
+                </p>
+            </div>
+            <div class="form-group {{ $errors->has('name') ? 'has-error' : '' }}">
+                <label for="name">Lastname</label>
+                <input type="text" id="lastname" name="lastname" class="form-control" value="{{ old('name', isset($client) ? $client->last_name : '') }}">
+                @if($errors->has('lastname'))
+                    <em class="invalid-feedback">
+                        {{ $errors->first('lastname') }}
                     </em>
                 @endif
                 <p class="helper-block">

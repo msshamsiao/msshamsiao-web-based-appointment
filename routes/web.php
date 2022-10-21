@@ -40,9 +40,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::resource('services', 'ServicesController');
 
     // Lawyer
-    Route::get('lawyer/', 'LawyerController@index')->name('lawyer.index');
-    Route::get('lawyer/create', 'LawyerController@create')->name('lawyer.create');
-    Route::post('lawyer/store', 'LawyerController@store')->name('lawyer.store');
+    Route::delete('lawyer/destroy', 'LawyerController@massDestroy')->name('lawyer.massDestroy');
+    Route::resource('lawyer', 'LawyerController');
 
     // Clients
     Route::delete('clients/destroy', 'ClientsController@massDestroy')->name('clients.massDestroy');

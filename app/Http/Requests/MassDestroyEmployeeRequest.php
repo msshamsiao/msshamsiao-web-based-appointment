@@ -11,7 +11,7 @@ class MassDestroyEmployeeRequest extends FormRequest
 {
     public function authorize()
     {
-        abort_if(Gate::denies('employee_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('lawyer_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return true;
     }
@@ -20,7 +20,7 @@ class MassDestroyEmployeeRequest extends FormRequest
     {
         return [
             'ids'   => 'required|array',
-            'ids.*' => 'exists:employees,id',
+            'ids.*' => 'exists:lawyers,id',
         ];
     }
 }

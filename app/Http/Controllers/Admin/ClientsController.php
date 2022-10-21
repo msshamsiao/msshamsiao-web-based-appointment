@@ -81,9 +81,17 @@ class ClientsController extends Controller
         return view('admin.clients.edit', compact('client'));
     }
 
-    public function update(UpdateClientRequest $request, Client $client)
+    public function update(UpdateClientRequest $request, $id)
     {
-        $client->update($request->all());
+        $client = Client::findOrFail($id);
+
+        $client->update([
+            'first_name' => $request->firstname,
+            'middle_name' => $request->middlename,
+            'last_name' => $request->lastname,
+            'phone' => $request->phone,
+            'email' => $request->email,
+        ]);
 
         return redirect()->route('admin.clients.index');
     }

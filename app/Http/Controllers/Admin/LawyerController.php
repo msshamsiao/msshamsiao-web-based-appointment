@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\MassDestroyEmployeeRequest;
+use App\Http\Requests\UpdateEmployeeRequest;
 use Illuminate\Http\Request;
 
 use App\Client;
@@ -35,13 +37,11 @@ class LawyerController extends Controller
                 return $row->email;
             });
             $table->editColumn('actions', function ($row) {
-                $viewGate      = 'lawyer_show';
                 $editGate      = 'lawyer_edit';
                 $deleteGate    = 'lawyer_delete';
-                $crudRoutePart = 'appointments';
+                $crudRoutePart = 'lawyer';
 
                 return view('partials.datatablesActions', compact(
-                    'viewGate',
                     'editGate',
                     'deleteGate',
                     'crudRoutePart',
@@ -74,5 +74,35 @@ class LawyerController extends Controller
         Lawyer::create($input);
 
         return redirect()->route('admin.lawyer.index')->with('success','Successfully created!');
+    }
+
+    public function edit(Lawyer $lawyer)
+    {
+        abort_if(Gate::denies('lawyer_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        return view('admin.lawyer.edit', compact('lawyer'));
+    }
+
+    public function update(UpdateEmployeeRequest $request, Lawyer $lawyer)
+    {
+        $lawyer->update($request->all());
+
+        return redirect()->route('admin.lawyer.index');
+    }
+
+    public function destory(Lawyer $lawyer)
+    {
+        abort_if(Gate::denies('lawyer_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $lawyer->delete();
+
+        return back();
+    }
+
+    public function massDestroy(MassDestroyEmployeeRequest $request, Lawyer $lawyer)
+    {
+        Lawyer::whereIn('id', request('ids'))->delete();
+
+        return response(null, Response::HTTP_NO_CONTENT);
     }
 }

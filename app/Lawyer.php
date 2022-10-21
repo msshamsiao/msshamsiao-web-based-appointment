@@ -17,4 +17,9 @@ class Lawyer extends Model
         'phone'
     ];
 
+    public function client_lawyer()
+    {
+        return $this->hasOne(Client::class, 'id' ,'client_id');
+    }
+
 }

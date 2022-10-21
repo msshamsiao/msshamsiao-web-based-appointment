@@ -50,8 +50,6 @@
                 <a class="btn btn-info" href="{{ route('admin.lawyer.index') }}">Back</a>
             </div>
         </form>
-
-
     </div>
 </div>
 @endsection

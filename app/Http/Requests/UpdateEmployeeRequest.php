@@ -11,7 +11,7 @@ class UpdateEmployeeRequest extends FormRequest
 {
     public function authorize()
     {
-        abort_if(Gate::denies('employee_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('lawyer_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return true;
     }
@@ -19,7 +19,7 @@ class UpdateEmployeeRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'       => [
+            'lawyer_name'       => [
                 'required',
             ],
             'services.*' => [
