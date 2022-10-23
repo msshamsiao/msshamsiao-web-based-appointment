@@ -10,6 +10,9 @@
         <form action="{{ route("admin.appointments.update", [$appointment->id]) }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
+
+            <input hidden value="{{ $appointment->client['phone'] }}" name="phone" id="phone">
+
             <div class="form-group">
                 <label for="lawyer">Lawyer</label>
                 <select name="lawyer" id="lawyer" class="form-control select2">

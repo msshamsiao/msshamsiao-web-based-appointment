@@ -13,7 +13,10 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
-Route::redirect('/', '/login');
+Route::get('/', function () {
+    return view('welcome');
+});
+
 Route::redirect('/home', '/admin');
 Auth::routes(['register' => false]);
 

@@ -19,8 +19,7 @@ class StoreAppointmentRequest extends FormRequest
     public function rules()
     {
         return [
-            'lawyer_id' => 'required',
-
+            
             'start_time'  => 'required|unique:appointments',
                 [
                     'date_format:' . config('panel.date_format') . ' ' . config('panel.time_format'),
@@ -30,8 +29,6 @@ class StoreAppointmentRequest extends FormRequest
                 [
                     'date_format:' . config('panel.date_format') . ' ' . config('panel.time_format'),
                 ],
-
-            'service_id' => 'required',
         ];
     }
 

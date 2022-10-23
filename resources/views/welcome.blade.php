@@ -1,100 +1,96 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html>
     <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>PAO Appointment</title>
 
-        <title>Laravel</title>
+        <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic" rel="stylesheet">
 
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
-        <!-- Styles -->
+        <link rel="stylesheet" type="text/css" href="styles.css">
+
         <style>
             html, body {
-                background-color: #fff;
-                color: #636b6f;
-                font-family: 'Nunito', sans-serif;
-                font-weight: 200;
-                height: 100vh;
                 margin: 0;
+                padding: 0;
+                font-family: 'Nanum Gothic', sans-serif;
             }
 
-            .full-height {
+            .main {
+                background-image: url(https://i.postimg.cc/Z5kyHB02/PAO.jpg);
                 height: 100vh;
+                background-repeat: no-repeat;
+                background-size: cover;
+                background-position: center;
             }
 
-            .flex-center {
-                align-items: center;
-                display: flex;
-                justify-content: center;
+            .main .contain {
+                background-color: gray;
+                height: 100%;
+                opacity: 0.7;
             }
 
-            .position-ref {
-                position: relative;
-            }
-
-            .top-right {
-                position: absolute;
-                right: 10px;
-                top: 18px;
-            }
-
-            .content {
+            .main .contain .content {
                 text-align: center;
+                padding-top: 230px;
+                color: #fff;
             }
 
-            .title {
-                font-size: 84px;
-            }
-
-            .links > a {
-                color: #636b6f;
-                padding: 0 25px;
-                font-size: 13px;
-                font-weight: 600;
-                letter-spacing: .1rem;
-                text-decoration: none;
+            .main .contain .content h4 {
+                font-size: 50px;
+                letter-spacing: 1px;
                 text-transform: uppercase;
             }
 
-            .m-b-md {
-                margin-bottom: 30px;
+            .main .contain .content hr {
+                width: 50%;
+            }
+            .main .contain .content p {
+                font-size: 20px;
+                letter-spacing: 0.8px;
+                margin-top: -200px;
+                font-weight: bold;
+                color: black;
+                text-shadow: 1px 1px white;
+                /* border: 2px solid black;   */
+            }
+
+            .main .contain .content input {
+                font-size: 25px;
+                text-transform: uppercase;
+                background-color: black;
             }
         </style>
     </head>
     <body>
-        <div class="flex-center position-ref full-height">
-            @if (Route::has('login'))
-                <div class="top-right links">
-                    @auth
-                        <a href="{{ url('/home') }}">Home</a>
-                    @else
-                        <a href="{{ route('login') }}">Login</a>
+        <div class="wrapper">
+            <div class="main">
+                <div class="contain">
+                    <br/><br/>
+                    <div class="content">
+                        
+                        <p>
+                            <br/>
+                            Web - Based Appointment Scheduling <br/> System with SMS Notification Alert
+                            <br/>
+                        </p>
+                        
+                        <br/><br/><br/><br/><br/>
+                        
+                        <img src="https://i.postimg.cc/bNqJL7h0/492-4927035-public-attorneys-office-public-attorneys-office-logo-hd-1-removebg-preview.png" 
+                             style="width:250px; height:250px;">
+                        
+                             <br/><br/><br/>
 
-                        @if (Route::has('register'))
-                            <a href="{{ route('register') }}">Register</a>
-                        @endif
-                    @endauth
-                </div>
-            @endif
-
-            <div class="content">
-                <div class="title m-b-md">
-                    Laravel
-                </div>
-
-                <div class="links">
-                    <a href="https://laravel.com/docs">Docs</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://blog.laravel.com">Blog</a>
-                    <a href="https://nova.laravel.com">Nova</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://vapor.laravel.com">Vapor</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
+                        <a href="/auth/registration">
+                            <input type="submit" class="btn btn-success" value="Book Appointment Now">
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
+
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     </body>
 </html>

@@ -15,6 +15,8 @@ use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\AppointmentMail;
 
 class AppointmentsController extends Controller
 {
@@ -106,14 +108,24 @@ class AppointmentsController extends Controller
     public function store(StoreAppointmentRequest $request)
     {
         Appointment::create([
-            'client_id' => $request->lawyer,
+            'client_id' => $request->client_id,
             'service_id' => $request->services,
-            'lawyer_id' => $request->lawyer,
+            'lawyer_id' => $request->lawyer_name,
             'start_time' => $request->start_time,
             'finish_time' => $request->finish_time,
             'comments' => $request->comments,
-            'status' => 'Available'
+            'status' => 'Pending'
         ]);
+
+        $data = [
+            'client_name' => auth()->user()->user_client['first_name']." ".auth()->user()->user_client['last_name'],
+            'lawyer_name' => $request->name_lawyer,
+            'service' => $request->service_name,
+            'start_time' => $request->start_time,
+            'finish_time' => $request->finish_time
+        ];
+
+        Mail::to($request->lawyer)->send(new AppointmentMail($data));
 
         return redirect()->route('admin.appointments.index');
     }
@@ -136,6 +148,17 @@ class AppointmentsController extends Controller
     public function update(UpdateAppointmentRequest $request, $id)
     {
         $appointment = Appointment::findOrFail($id);
+       
+        if($request->status == 'Approved'){
+            $basic  = new \Nexmo\Client\Credentials\Basic('f06388f5', 'WQ7gqEH09cck2VSC');
+            $client = new \Nexmo\Client($basic);
+    
+            $client->message()->send([
+                'to' => '639'.substr($request->phone, 2),
+                'from' => 'PAO Appointment',
+                'text' => 'Hello your appointment to PAO is now approved! Thank you!'
+            ]);
+        }
 
         $appointment->update([
             'lawyer_id' => $request->lawyer,
