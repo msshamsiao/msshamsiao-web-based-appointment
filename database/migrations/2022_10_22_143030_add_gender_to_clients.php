@@ -14,7 +14,7 @@ class AddGenderToClients extends Migration
     public function up()
     {
         Schema::table('clients', function (Blueprint $table) {
-            $table->integer('gender')->after('last_name');
+            $table->integer('gender')->nullable()->after('last_name');
         });
     }
 
