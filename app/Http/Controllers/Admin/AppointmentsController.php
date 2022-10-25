@@ -150,7 +150,7 @@ class AppointmentsController extends Controller
         $appointment = Appointment::findOrFail($id);
        
         if($request->status == 'Approved'){
-            $basic  = new \Nexmo\Client\Credentials\Basic('f06388f5', 'WQ7gqEH09cck2VSC');
+            $basic  = new \Nexmo\Client\Credentials\Basic(getenv("NEXMO_KEY"), getenv("NEXMO_SECRET"));
             $client = new \Nexmo\Client($basic);
     
             $client->message()->send([

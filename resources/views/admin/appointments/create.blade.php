@@ -20,8 +20,8 @@
                         <option value="{{ $lawyer->id }}" data-id="{{ $lawyer->email }}" data-name="{{ $lawyer->lawyer_name }}">{{ $lawyer->lawyer_name }}</option>
                     @endforeach
                 </select>
-                <input type="text" name="lawyer" id="lawyer" value="">
-                <input type="text" name="name_lawyer" id="name_lawyer" value="">
+                <input hidden name="lawyer" id="lawyer" value="">
+                <input hidden name="name_lawyer" id="name_lawyer" value="">
             </div>
             <div class="form-group {{ $errors->has('services') ? 'has-error' : '' }}">
                 <label for="services">Services <span style="color: red; font-weight:bold">*</span>
