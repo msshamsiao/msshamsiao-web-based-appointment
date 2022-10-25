@@ -17,7 +17,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\AppointmentMail;
-use Nexmo\Laravel\Facade\Nexmo;
 
 class AppointmentsController extends Controller
 {
@@ -151,13 +150,13 @@ class AppointmentsController extends Controller
         $appointment = Appointment::findOrFail($id);
        
         if($request->status == 'Approved'){
-            $client = app('Nexmo\Client');
-    
-            $client->message()->send([
-                'to' => '639'.substr($request->phone, 2),
-                'from' => 'PAO Appointment',
-                'text' => 'Hello your appointment to PAO is now approved! Thank you!'
-            ]);
+            $basic  = new \Vonage\Client\Credentials\Basic("f06388f5", "WQ7gqEH09cck2VSC");
+            $client = new \Vonage\Client($basic);
+
+            $phone = '639'.substr($request->phone, 2);
+            $response = $client->sms()->send(
+                new \Vonage\SMS\Message\SMS($phone, "PAO Appointment", 'Hello your appointment to PAO is now approved! Thank you!')
+            );
         }
 
         $appointment->update([
