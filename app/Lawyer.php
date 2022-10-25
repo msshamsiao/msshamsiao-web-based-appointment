@@ -19,7 +19,7 @@ class Lawyer extends Model
 
     public function client_lawyer()
     {
-        return $this->hasOne(Client::class, 'id' ,'client_id');
+        return $this->hasOne(Clients::class, 'id' ,'client_id');
     }
 
 }

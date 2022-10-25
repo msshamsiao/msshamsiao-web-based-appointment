@@ -7,7 +7,6 @@ use App\Http\Requests\MassDestroyEmployeeRequest;
 use App\Http\Requests\UpdateEmployeeRequest;
 use Illuminate\Http\Request;
 
-use App\Client;
 use App\Lawyer;
 use Gate;
 

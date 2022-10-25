@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Api\V1\Admin;
 
-use App\Client;
+use App\Clients;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreClientRequest;
 use App\Http\Requests\UpdateClientRequest;
@@ -17,26 +17,26 @@ class ClientsApiController extends Controller
     {
         abort_if(Gate::denies('client_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new ClientResource(Client::all());
+        return new ClientResource(Clients::all());
     }
 
     public function store(StoreClientRequest $request)
     {
-        $client = Client::create($request->all());
+        $client = Clients::create($request->all());
 
         return (new ClientResource($client))
             ->response()
             ->setStatusCode(Response::HTTP_CREATED);
     }
 
-    public function show(Client $client)
+    public function show(Clients $client)
     {
         abort_if(Gate::denies('client_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return new ClientResource($client);
     }
 
-    public function update(UpdateClientRequest $request, Client $client)
+    public function update(UpdateClientRequest $request, Clients $client)
     {
         $client->update($request->all());
 
@@ -45,7 +45,7 @@ class ClientsApiController extends Controller
             ->setStatusCode(Response::HTTP_ACCEPTED);
     }
 
-    public function destroy(Client $client)
+    public function destroy(Clients $client)
     {
         abort_if(Gate::denies('client_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 

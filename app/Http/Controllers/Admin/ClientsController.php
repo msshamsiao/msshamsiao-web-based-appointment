@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Client;
+use App\Clients;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyClientRequest;
 use App\Http\Requests\StoreClientRequest;
@@ -17,7 +17,7 @@ class ClientsController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $query = Client::query()->select(sprintf('%s.*', (new Client)->table));
+            $query = Clients::query()->select(sprintf('%s.*', (new Clients)->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -69,12 +69,12 @@ class ClientsController extends Controller
 
     public function store(StoreClientRequest $request)
     {
-        $client = Client::create($request->all());
+        $client = Clients::create($request->all());
 
         return redirect()->route('admin.clients.index');
     }
 
-    public function edit(Client $client)
+    public function edit(Clients $client)
     {
         abort_if(Gate::denies('client_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
@@ -83,7 +83,7 @@ class ClientsController extends Controller
 
     public function update(UpdateClientRequest $request, $id)
     {
-        $client = Client::findOrFail($id);
+        $client = Clients::findOrFail($id);
 
         $client->update([
             'first_name' => $request->firstname,
@@ -96,14 +96,14 @@ class ClientsController extends Controller
         return redirect()->route('admin.clients.index');
     }
 
-    public function show(Client $client)
+    public function show(Clients $client)
     {
         abort_if(Gate::denies('client_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return view('admin.clients.show', compact('client'));
     }
 
-    public function destroy(Client $client)
+    public function destroy(Clients $client)
     {
         abort_if(Gate::denies('client_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
@@ -114,7 +114,7 @@ class ClientsController extends Controller
 
     public function massDestroy(MassDestroyClientRequest $request)
     {
-        Client::whereIn('id', request('ids'))->delete();
+        Clients::whereIn('id', request('ids'))->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
     }

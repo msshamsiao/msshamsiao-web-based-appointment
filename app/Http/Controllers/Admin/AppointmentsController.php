@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Appointment;
-use App\Client;
+use App\Clients;
 use App\Employee;
 use App\Lawyer;
 use App\Http\Controllers\Controller;
@@ -17,6 +17,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\AppointmentMail;
+use Twilio\Rest\Client;
 
 class AppointmentsController extends Controller
 {
@@ -96,7 +97,7 @@ class AppointmentsController extends Controller
     {
         abort_if(Gate::denies('appointment_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $clients = Client::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $clients = Clients::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $lawyers = Lawyer::get();
 
@@ -134,7 +135,7 @@ class AppointmentsController extends Controller
     {
         abort_if(Gate::denies('appointment_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $clients = Client::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $clients = Clients::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $lawyers = Lawyer::get();
 
@@ -150,12 +151,15 @@ class AppointmentsController extends Controller
         $appointment = Appointment::findOrFail($id);
        
         if($request->status == 'Approved'){
-            $basic  = new \Vonage\Client\Credentials\Basic("f06388f5", "WQ7gqEH09cck2VSC");
-            $client = new \Vonage\Client($basic);
-
-            $phone = '639'.substr($request->phone, 2);
-            $response = $client->sms()->send(
-                new \Vonage\SMS\Message\SMS($phone, "PAO Appointment", 'Hello your appointment to PAO is now approved! Thank you!')
+            $sid = config('constant.twilio_id');
+            $token = config('constant.twilio_token');
+            $client = new Client($sid, $token);
+            $client->messages->create(
+                '+639'.substr($request->phone, 2),
+                array(
+                    'from' => config('constant.twilio_phone_number'),
+                    'body' => 'Hello your appointment to PAO is now approved! Thank you!',
+                )
             );
         }
 

@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Client;
+use App\Clients;
 use App\User;
 
 class RegistrationController extends Controller
@@ -26,7 +26,7 @@ class RegistrationController extends Controller
         ]);
 
         $input = $request->all();
-        Client::create($input);
+        Clients::create($input);
 
         $fullname = $request->first_name.' '.$request->middle_name.' '.$request->last_name;
         $user = User::create([
