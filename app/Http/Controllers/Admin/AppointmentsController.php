@@ -17,6 +17,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\AppointmentMail;
+use Vonage\Client\Credentials\Basic;
 
 class AppointmentsController extends Controller
 {
@@ -150,7 +151,7 @@ class AppointmentsController extends Controller
         $appointment = Appointment::findOrFail($id);
        
         if($request->status == 'Approved'){
-            $basic  = new \Vonage\Client\Credentials\Basic("f06388f5", "WQ7gqEH09cck2VSC");
+            $basic  = new Basic("f06388f5", "WQ7gqEH09cck2VSC");
             $client = new \Vonage\Client($basic);
 
             $phone = '639'.substr($request->phone, 2);
