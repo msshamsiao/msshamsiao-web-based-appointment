@@ -87,7 +87,7 @@ class AppointmentsController extends Controller
 
             return $table->rawColumns(['actions', 'placeholder', 'client_name', 'lawyer_name', 'services', 'start_time', 'finish_time', 'comments', 'status', 'actions'])
             ->make(true);
-
+ 
         }
 
         return view('admin.appointments.index');
