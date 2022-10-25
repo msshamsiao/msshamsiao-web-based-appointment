@@ -17,6 +17,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\AppointmentMail;
+use Nexmo\Laravel\Facade\Nexmo;
 
 class AppointmentsController extends Controller
 {
@@ -150,8 +151,7 @@ class AppointmentsController extends Controller
         $appointment = Appointment::findOrFail($id);
        
         if($request->status == 'Approved'){
-            $basic  = new \Nexmo\Client\Credentials\Basic(getenv("NEXMO_KEY"), getenv("NEXMO_SECRET"));
-            $client = new \Nexmo\Client($basic);
+            $client = app('Nexmo\Client');
     
             $client->message()->send([
                 'to' => '639'.substr($request->phone, 2),

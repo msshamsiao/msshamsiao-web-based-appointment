@@ -16,7 +16,9 @@
         "laravel/passport": "^10.0",
         "laravel/tinker": "^2.0",
         "laravel/ui": "^3.0",
+        "nexmo/laravel": "^2.0",
         "spatie/laravel-medialibrary": "^8.7",
+        "vonage/client": "^3.0",
         "yajra/laravel-datatables-oracle": "^9.6"
     },
     "require-dev": {
