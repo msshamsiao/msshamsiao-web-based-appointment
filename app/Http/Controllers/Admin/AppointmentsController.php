@@ -19,6 +19,8 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\AppointmentMail;
 use Twilio\Rest\Client;
 
+require_once "twilio-php-master/Twilio/autoload.php";
+
 class AppointmentsController extends Controller
 {
     public function index(Request $request)
@@ -153,7 +155,7 @@ class AppointmentsController extends Controller
         if($request->status == 'Approved'){
             $sid = config('constant.twilio_id');
             $token = config('constant.twilio_token');
-            $client = new Client($sid, $token);
+            $client = new \Twilio\Rest\Client($sid, $token);
             $client->messages->create(
                 '+639'.substr($request->phone, 2),
                 array(
