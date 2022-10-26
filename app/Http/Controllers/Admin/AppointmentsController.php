@@ -19,8 +19,6 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\AppointmentMail;
 use Twilio\Rest\Client;
 
-require_once "twilio-php-master/Twilio/autoload.php";
-
 class AppointmentsController extends Controller
 {
     public function index(Request $request)
