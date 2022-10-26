@@ -31,9 +31,8 @@
     @if ($message = Session::get('success'))
         <div class="alert alert-success">
             <h4 class="alert-heading">Success!</h4>
-            <p>{{ $message }}.</p>
             <hr>
-            <p class="mb-0">This will send an sms to client.</p>
+            <p class="mb-0">{{ $message }}</p>
         </div>
     @endif
 

@@ -80,6 +80,8 @@ class AppointmentsController extends Controller
                 $status = "";
                 if($row->status == 'Pending'){
                     $status = '<span class="badge badge-danger">Pending</span>';
+                }elseif($row->status == 'Cancelled'){
+                    $status = '<span class="badge badge-warning">Cancelled</span>';
                 }else{
                     $status = '<span class="badge badge-success">Approved</span>';
                 }
@@ -173,9 +175,7 @@ class AppointmentsController extends Controller
             'status' => $request->status
         ]);
 
-        $message = 'approved!';
-
-        return redirect()->route('admin.appointments.index')->with('success','successfully '.$message);
+        return redirect()->route('admin.appointments.index')->with('success','successfully updated!');
     }
 
     public function show(Appointment $appointment)

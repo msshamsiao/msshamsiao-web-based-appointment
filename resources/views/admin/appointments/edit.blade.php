@@ -70,6 +70,7 @@
                 <label for="status">Status</label>
                 <select name="status" id="status" class="form-control select2">
                    <option value="Pending" {{ ( $appointment->status == 'Pending' ) ? 'selected' : '' }}>Pending</option>
+                   <option value="Cancelled" {{ ( $appointment->status == 'Cancelled' ) ? 'selected' : '' }}>Cancelled</option>
                    <option value="Approved" {{ ( $appointment->status == 'Approved' ) ? 'selected' : '' }}>Approved</option>
                 </select>
                 @if($errors->has('services'))
