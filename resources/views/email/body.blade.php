@@ -3,7 +3,7 @@
         <div class="container">
             <div style="margin: 0 auto; font-family: century gothic; max-width: 650px; min-width: 320px;">
                 <div style="text-align: center; background: #f3f3f3; padding: 50px 0; margin: 0 0 30px 0;">
-                    <div style="font-size: 1.3em; color: #bbbfc3; text-transform: uppercase; font-weight: bold;">Sablayan - Tourism</div>
+                    <div style="font-size: 1.3em; color: #bbbfc3; text-transform: uppercase; font-weight: bold;">PAO - Appointment</div>
                 </div>
                 <div style="max-width: 500px; margin: 0 auto;">
                     <p style="margin-bottom: 15px;">Hi, 
