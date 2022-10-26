@@ -15,6 +15,8 @@
     <div class="card-header">
         {{ trans('cruds.appointment.title_singular') }} {{ trans('global.list') }}
     </div>
+    
+    <br/>
     @if ($errors->any())
         <div class="alert alert-danger">
             <strong>Whoops!</strong> There were some problems with your input.<br><br>
@@ -28,7 +30,10 @@
 
     @if ($message = Session::get('success'))
         <div class="alert alert-success">
-            <p>{{ $message }}</p>
+            <h4 class="alert-heading">Success!</h4>
+            <p>{{ $message }}.</p>
+            <hr>
+            <p class="mb-0">This will send an sms to client.</p>
         </div>
     @endif
 

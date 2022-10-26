@@ -151,23 +151,17 @@ class AppointmentsController extends Controller
     {
         $appointment = Appointment::findOrFail($id);
        
-        try{
-            if($request->status == 'Approved'){
-                $sid = config('constant.twilio_id');
-                $token = config('constant.twilio_token');
-                $client = new Client($sid, $token);
-                $client->messages->create(
-                    '+639'.substr($request->phone, 2),
-                    array(
-                        'from' => config('constant.twilio_phone_number'),
-                        'body' => 'Hello your appointment to PAO is now approved! Thank you!',
-                    )
-                );
-
-                $message = 'approved!';
-            }
-        } catch (Exception $e){
-            return redirect()->route('admin.appointments.index')->with('error', $e->getMessage());
+        if($request->status == 'Approved'){
+            $sid = config('constant.twilio_id');
+            $token = config('constant.twilio_token');
+            $client = new Client($sid, $token);
+            $client->messages->create(
+                '+639'.substr($request->phone, 2),
+                array(
+                    'from' => config('constant.twilio_phone_number'),
+                    'body' => 'Hello your appointment to PAO is now approved! Thank you!',
+                )
+            );
         }
 
         $appointment->update([
@@ -179,7 +173,7 @@ class AppointmentsController extends Controller
             'status' => $request->status
         ]);
 
-        $message = 'pending!';
+        $message = 'approved!';
 
         return redirect()->route('admin.appointments.index')->with('success','successfully '.$message);
     }
