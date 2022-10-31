@@ -154,7 +154,7 @@ class AppointmentsController extends Controller
         $appointment = Appointment::findOrFail($id);
        
         if($request->status == 'Approved'){
-            $sid = config('constant.twilio_id');
+            /*$sid = config('constant.twilio_id');
             $token = config('constant.twilio_token');
             $client = new Client($sid, $token);
             $client->messages->create(
@@ -163,6 +163,15 @@ class AppointmentsController extends Controller
                     'from' => config('constant.twilio_phone_number'),
                     'body' => 'Hello your appointment to PAO is now approved! Thank you!',
                 )
+            );*/
+
+            $basic  = new \Vonage\Client\Credentials\Basic("cbf88a81", "wegXArswymrv3JvR");
+            $client = new \Vonage\Client($basic);
+
+            $client_num = '+639'.substr($request->phone, 2);
+
+            $client->sms()->send(
+                new \Vonage\SMS\Message\SMS($client_num, 'PAO Appointment', 'Hello your appointment to PAO is now approved! Thank you!')
             );
         }
 
