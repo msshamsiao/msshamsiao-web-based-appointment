@@ -108,34 +108,30 @@
         <div class="card-group">
             <div class="card p-4">
                 <div class="card-body">
-                    <form method="POST" action="{{ route('login') }}">
-                        {{ csrf_field() }}
-                        <h1>Appointment</h1>
-                        <p>Please Login</p>
-
+                    <h1>Appointment</h1>
+                    <p>Please Login </p>
+                    <form method="POST" action="{{ url('/login') }}">
+                        @csrf            
                         <div class="row justify-content-center">
                             <div class="col-12">
-                                @if(\Session::has('message'))
-                                    <p class="alert alert-info">
-                                        {{ \Session::get('message') }}
-                                    </p>
-                                @endif
-
+                                
                                 <label for="Email"><b>Email</b></label>
-                                <input name="email" type="text" class="{{ $errors->has('email') ? ' is-invalid' : '' }}" required autofocus placeholder="{{ trans('global.login_email') }}" value="{{ old('email', null) }}">
-                                @if($errors->has('email'))
-                                    <div class="invalid-feedback">
-                                        {{ $errors->first('email') }}
-                                    </div>
-                                @endif
-
+                                <input name="email" type="email" class="form-control @error('email') is-invalid @enderror" required autofocus placeholder="{{ trans('global.login_email') }}" value="{{ old('email', null) }}">
+                                @error('email')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                               
+                                <br/>
+                                
                                 <label for="Password"><b>Password</b></label>
-                                <input name="password" type="password" class="{{ $errors->has('password') ? ' is-invalid' : '' }}" required placeholder="{{ trans('global.login_password') }}">
-                                @if($errors->has('password'))
-                                    <div class="invalid-feedback">
-                                        {{ $errors->first('password') }}
-                                    </div>
-                                @endif
+                                <input name="password" type="password" class="form-control @error('password') is-invalid @enderror" required placeholder="{{ trans('global.login_password') }}">
+                                @error('password')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
 
                                 <button type="submit" class="btn btn-primary px-4">
                                     {{ trans('global.login') }}

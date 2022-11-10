@@ -13,7 +13,7 @@
             html, body {
                 margin: 0;
                 padding: 0;
-                font-family: 'Nanum Gothic', sans-serif;
+                font-family: 'Gothic', sans-serif;
             }
 
             .main {
@@ -46,10 +46,10 @@
                 width: 50%;
             }
             .main .contain .content p {
-                font-size: 20px;
+                font-size: 30px;
+                font-weight: bold;
                 letter-spacing: 0.8px;
                 margin-top: -200px;
-                font-weight: bold;
                 color: black;
                 text-shadow: 1px 1px white;
                 /* border: 2px solid black;   */
@@ -75,7 +75,7 @@
                             <br/>
                         </p>
                         
-                        <br/><br/><br/><br/><br/>
+                        <br/><br/><br/><br/>
                         
                         <img src="https://i.postimg.cc/bNqJL7h0/492-4927035-public-attorneys-office-public-attorneys-office-logo-hd-1-removebg-preview.png" 
                              style="width:250px; height:250px;">

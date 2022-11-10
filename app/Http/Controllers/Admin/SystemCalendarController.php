@@ -19,8 +19,10 @@ class SystemCalendarController extends Controller
                 continue;
             }
 
+            $status = 'Not Available';
+
             $events[] = [
-                'title' => $appointment->client['first_name']." ".$appointment->client['last_name'] . ' ('.date('F j, Y - g:i A ', strtotime($appointment->start_time)).')',
+                'title' =>  $status. ' ('.date('g:i A ', strtotime($appointment->start_time)).')',
                 'start' => $appointment->start_time,
                 'url'   => route('admin.appointments.edit', $appointment->id),
             ];
