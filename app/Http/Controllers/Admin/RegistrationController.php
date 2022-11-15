@@ -21,13 +21,12 @@ class RegistrationController extends Controller
             'last_name' => 'required',
             'phone' => 'required',
             'email' => 'required',
-            'password' => 'required',
-            'confirm_password' => 'required'
+            'password' => 'required|min:6',
+            'confirm_password' => 'required|min:6'
         ]);
 
         $input = $request->all();
         Clients::create($input);
-
         $fullname = $request->first_name.' '.$request->middle_name.' '.$request->last_name;
         $user = User::create([
             'name' => $fullname,
