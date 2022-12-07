@@ -155,7 +155,7 @@ class AppointmentsController extends Controller
        
         if($request->status == 'Approved'){
 
-            $basic  = new \Vonage\Client\Credentials\Basic("cbf88a81", "wegXArswymrv3JvR");
+            $basic  = $basic  = new \Vonage\Client\Credentials\Basic("97d014de", "lu6fCX95I404tf0x");
             $client = new \Vonage\Client($basic);
 
             $client_num = '+639'.substr($request->phone, 2);
