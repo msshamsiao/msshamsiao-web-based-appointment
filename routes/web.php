@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Artisan;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -12,6 +13,13 @@ use Illuminate\Support\Facades\Auth;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+Route::get('clear_cache', function () {
+    Artisan::call('config:cache');
+    Artisan::call('view:clear');
+    Artisan::call('route:clear');
+    dd("Cache is cleared");
+});
 
 Route::get('/', function () {
     return view('welcome');
